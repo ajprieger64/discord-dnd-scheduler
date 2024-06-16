@@ -4,8 +4,20 @@ import datetime
 import sys
 import zoneinfo
 import discord
+import configparser
+from pathlib import Path
 from discord.ext import commands, tasks
-from settings import DISCORD_TOKEN, DISCORD_GUILD, TIMEZONE, SCHEDULING_CHANNEL_NAME
+from config.authentication_token import AUTHENTICATION_TOKEN
+
+config = configparser.ConfigParser()
+
+config_path = Path('config/config.ini')
+with open(config_path, 'r') as config_file:
+    config.read_file(config_file)
+
+DISCORD_GUILD = config['CHANNEL'].getint('DISCORD_GUILD')
+SCHEDULING_CHANNEL_NAME = config['CHANNEL'].get('SCHEDULING_CHANNEL_NAME', fallback='scheduling')
+TIMEZONE = zoneinfo.ZoneInfo(config['TIMING'].get('TIMEZONE', fallback='US/Central'))
 
 SCHEDULE_TIME = datetime.time(hour=16, tzinfo=TIMEZONE)
 
@@ -57,6 +69,6 @@ async def main():
     async with ScheduleBot(command_prefix='!', intents=intents) as bot:
 
         # await bot.load_extension('cogs.schedule_cog')
-        await bot.start(DISCORD_TOKEN)
+        await bot.start(AUTHENTICATION_TOKEN)
 
 asyncio.run(main())

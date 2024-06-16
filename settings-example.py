@@ -1,6 +1,0 @@
-import zoneinfo
-
-DISCORD_TOKEN='TOKEN-HERE'
-DISCORD_GUILD=1234
-TIMEZONE=zoneinfo.ZoneInfo('US/Central')
-SCHEDULING_CHANNEL_NAME='scheduling'

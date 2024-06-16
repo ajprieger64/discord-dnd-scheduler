@@ -1,4 +1,5 @@
 settings.py
+config/authentication_token.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
